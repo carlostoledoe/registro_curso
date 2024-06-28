@@ -36,7 +36,11 @@ class Direccion(models.Model):
     numero = models.CharField(max_length=10)
     comuna = models.CharField(max_length=50)
     region = models.CharField(max_length=50, choices=regiones)
-    estudiante = models.OneToOneField(Estudiante, related_name='direccion', on_delete=models.CASCADE)
+    estudiante = models.OneToOneField(
+        Estudiante, 
+        related_name='direccion', 
+        on_delete=models.CASCADE
+        )
     def __str__(self) -> str:
         return f'{self.calle} {self.comuna}'
 
@@ -47,6 +51,7 @@ class Profesor(models.Model):
     activo = models.BooleanField(default=False)
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
+    # cursos
     def __str__(self) -> str:
         return f'{self.nombre} {self.apellido}'
 
@@ -54,8 +59,15 @@ class Curso(models.Model):
     codigo = models.CharField(max_length=10, primary_key=True)
     nombre = models.CharField(max_length=50)
     version = models.IntegerField()
-    profesor = models.ForeignKey(Profesor, related_name='cursos', on_delete=models.CASCADE, null=True)
-    estudiantes = models.ManyToManyField(Estudiante, related_name='cursos') # Los null no tienen efecto en ManyToManyField
+    profesor = models.ForeignKey(
+        Profesor, 
+        related_name='cursos', 
+        on_delete=models.CASCADE, null=True
+        )
+    estudiantes = models.ManyToManyField(
+        Estudiante, 
+        related_name='cursos'
+        ) # Los null no tienen efecto en ManyToManyField
     def __str__(self) -> str:
         return f'{self.codigo} {self.nombre}'
 
