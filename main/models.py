@@ -7,8 +7,8 @@ class Estudiante(models.Model):
     apellido = models.CharField(max_length=50)
     fecha_nac = models.DateField()
     activo = models.BooleanField(default=False)
-    created = models.DateField(auto_now_add=True)
-    updated = models.DateField(auto_now=True)
+    created = models.DateTimeField(auto_now_add=True)
+    updated = models.DateTimeField(auto_now=True)
     # dirección: Dirección
     def __str__(self) -> str:
         return f'{self.nombre} {self.apellido}'
@@ -45,8 +45,8 @@ class Profesor(models.Model):
     nombre = models.CharField(max_length=50)
     apellido = models.CharField(max_length=50)
     activo = models.BooleanField(default=False)
-    created = models.DateField(auto_now_add=True)
-    updated = models.DateField(auto_now=True)
+    created = models.DateTimeField(auto_now_add=True)
+    updated = models.DateTimeField(auto_now=True)
     def __str__(self) -> str:
         return f'{self.nombre} {self.apellido}'
 
@@ -54,8 +54,8 @@ class Curso(models.Model):
     codigo = models.CharField(max_length=10, primary_key=True)
     nombre = models.CharField(max_length=50)
     version = models.IntegerField()
-    profesor = models.ForeignKey(Profesor, related_name='cursos', on_delete=models.CASCADE)
-    estudiantes = models.ManyToManyField(Estudiante, related_name='cursos')
+    profesor = models.ForeignKey(Profesor, related_name='cursos', on_delete=models.CASCADE, null=True)
+    estudiantes = models.ManyToManyField(Estudiante, related_name='cursos') # Los null no tienen efecto en ManyToManyField
     def __str__(self) -> str:
         return f'{self.codigo} {self.nombre}'
 
