@@ -10,6 +10,7 @@ class Estudiante(models.Model):
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
     # dirección: Dirección
+    # Cada estudiante tiene una lista de cursos, implicita
     def __str__(self) -> str:
         return f'{self.nombre} {self.apellido}'
 
